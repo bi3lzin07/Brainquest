@@ -15,12 +15,12 @@ class MyApp extends StatelessWidget {
       ),
       home: HomeScreen(),
       routes: {
-        '/studyMethods': (context) => PlaceholderPage(title: 'Métodos de Estudo'),
         '/timer': (context) => PlaceholderPage(title: 'Cronômetro'),
         '/enemLessons': (context) => PlaceholderPage(title: 'Aulão do ENEM'),
         '/enemTests': (context) => PlaceholderPage(title: 'Provas ENEM'),
         '/questions': (context) => PlaceholderPage(title: 'Questões'),
         '/schedule': (context) => PlaceholderPage(title: 'Cronograma de Estudos'),
+        '/redacao': (context) => PlaceholderPage(title: 'Redação'),
         '/apps': (context) => PlaceholderPage(title: 'Aplicativos'),
       },
     );
@@ -41,13 +41,16 @@ class HomeScreen extends StatelessWidget {
             DrawerHeader(
               child: Text('Menu'),
               decoration: BoxDecoration(
-                color:  Color.fromARGB(255, 101, 247, 159),
+                color: Color.fromARGB(255, 101, 247, 159),
               ),
             ),
             ListTile(
               title: Text('Métodos de Estudo'),
               onTap: () {
-                Navigator.pushNamed(context, '/studyMethods');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudyMethodsScreen()),
+                );
               },
             ),
             ListTile(
@@ -80,6 +83,12 @@ class HomeScreen extends StatelessWidget {
                 Navigator.pushNamed(context, '/schedule');
               },
             ),
+             ListTile(
+              title: Text('Redação'),
+              onTap: () {
+                Navigator.pushNamed(context, '/redacao');
+              },
+            ),
             ListTile(
               title: Text('Aplicativos'),
               onTap: () {
@@ -92,23 +101,50 @@ class HomeScreen extends StatelessWidget {
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[
-          GridItem(name: 'Métodos de Estudo'),
-          GridItem(name: 'Cronômetro'),
-          GridItem(name: 'Aulão do ENEM'),
-          GridItem(name: 'Provas ENEM'),
-          GridItem(name: 'Questões'),
-          GridItem(name: 'Cronograma de Estudos'),
-          GridItem(name: 'Aplicativos'),
+          GridItem(
+            name: 'Métodos de Estudo',
+            icon: Icons.book,
+          ),
+          GridItem(
+            name: 'Cronômetro',
+            icon: Icons.timer,
+          ),
+          GridItem(
+            name: 'Aulão do ENEM',
+            icon: Icons.school,
+          ),
+          GridItem(
+            name: 'Provas ENEM',
+            icon: Icons.assignment,
+          ),
+          GridItem(
+            name: 'Questões',
+            icon: Icons.help,
+          ),
+          GridItem(
+            name: 'Cronograma de Estudos',
+            icon: Icons.event,
+          ),
+           GridItem(
+            name: 'Redação',
+            icon: Icons.reduce_capacity_outlined,
+          ),
+          GridItem(
+            name: 'Aplicativos',
+            icon: Icons.apps,
+          ),
         ],
       ),
     );
   }
 }
 
+//pagina inicial
 class GridItem extends StatelessWidget {
   final String name;
+  final IconData icon;
 
-  GridItem({required this.name});
+  GridItem({required this.name, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +153,10 @@ class GridItem extends StatelessWidget {
         onTap: () {
           switch (name) {
             case 'Métodos de Estudo':
-              Navigator.pushNamed(context, '/studyMethods');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => StudyMethodsScreen()),
+              );
               break;
             case 'Cronômetro':
               Navigator.pushNamed(context, '/timer');
@@ -134,16 +173,24 @@ class GridItem extends StatelessWidget {
             case 'Cronograma de Estudos':
               Navigator.pushNamed(context, '/schedule');
               break;
+              case 'Redação':
+              Navigator.pushNamed(context, '/redacao');
+              break;
             case 'Aplicativos':
               Navigator.pushNamed(context, '/apps');
               break;
           }
         },
-        child: Center(
-          child: Text(
-            name,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(icon),
+            SizedBox(height: 8),
+            Text(
+              name,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
       ),
     );
@@ -163,6 +210,54 @@ class PlaceholderPage extends StatelessWidget {
       ),
       body: Center(
         child: Text('Página em construção: $title'),
+      ),
+    );
+  }
+}
+
+//Abas dentro do metodo de estudos
+class StudyMethodsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 6, // número de abas
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Métodos de Estudo'),
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          children: <Widget>[
+            GridItem(
+              name: 'Técnica de Pomodoro',
+              icon: Icons.timer,
+            ),
+            GridItem(
+              name: 'Kumon',
+              icon: Icons.school,
+            ),
+            GridItem(
+              name: 'Método EPL2R',
+              icon: Icons.assignment,
+            ),
+            GridItem(
+              name: 'Questões',
+              icon: Icons.help,
+            ),
+            GridItem(
+              name: 'Mapas Mentais',
+              icon: Icons.event,
+            ),
+            GridItem(
+              name: 'Testes Práticos',
+              icon: Icons.apps,
+            ),
+            GridItem(
+              name: 'Flashcards',
+              icon: Icons.apps,
+            ),
+          ],
+        ),
       ),
     );
   }
