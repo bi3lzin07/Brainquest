@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,13 +15,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: const Login(),
       routes: {
+        '/home': (context) => HomePage(),
         '/timer': (context) => PlaceholderPage(title: 'Cronômetro'),
-        '/enemLessons': (context) => PlaceholderPage(title: 'Aulão do ENEM'),
-        '/enemTests': (context) => PlaceholderPage(title: 'Provas ENEM'),
         '/questions': (context) => PlaceholderPage(title: 'Questões'),
-        '/schedule': (context) => PlaceholderPage(title: 'Cronograma de Estudos'),
+        '/schedule': (context) =>
+            PlaceholderPage(title: 'Cronograma de Estudos'),
         '/redacao': (context) => PlaceholderPage(title: 'Redação'),
         '/apps': (context) => PlaceholderPage(title: 'Aplicativos'),
       },
@@ -27,25 +29,131 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
+
+  void _login(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/home');
+  }
+
+  void _register(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const RegisterPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BrainQuest'),
+        title: const Text('Login Page'),
+        backgroundColor: Colors.blue,
+      ),
+      body: Center(
+        child: Container(
+          width: 300,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Conectar-se com:',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  SocialButton(icon: Icons.facebook, color: Colors.blue),
+                  SocialButton(icon: Icons.g_mobiledata, color: Colors.red),
+                  SocialButton(icon: Icons.apple, color: Colors.black),
+                ],
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Senha',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () => _login(context),
+                child: const Text('Login'),
+              ),
+              TextButton(
+                onPressed: () => _register(context),
+                child: const Text('Não tem uma conta? Cadastrar-se'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SocialButton extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+
+  const SocialButton({required this.icon, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(icon),
+      color: color,
+      onPressed: () {},
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('BrainQuest'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
+            const DrawerHeader(
               child: Text('Menu'),
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 101, 247, 159),
               ),
             ),
             ListTile(
-              title: Text('Métodos de Estudo'),
+              title: const Text('Métodos de Estudo'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -54,43 +162,43 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Cronômetro'),
+              title: const Text('Cronômetro'),
               onTap: () {
                 Navigator.pushNamed(context, '/timer');
               },
             ),
             ListTile(
-              title: Text('Aulão do ENEM'),
+              title: const Text('Aulão do ENEM'),
               onTap: () {
                 Navigator.pushNamed(context, '/enemLessons');
               },
             ),
             ListTile(
-              title: Text('Provas ENEM'),
+              title: const Text('Provas ENEM'),
               onTap: () {
                 Navigator.pushNamed(context, '/enemTests');
               },
             ),
             ListTile(
-              title: Text('Questões'),
+              title: const Text('Questões'),
               onTap: () {
                 Navigator.pushNamed(context, '/questions');
               },
             ),
             ListTile(
-              title: Text('Cronograma de Estudos'),
+              title: const Text('Cronograma de Estudos'),
               onTap: () {
                 Navigator.pushNamed(context, '/schedule');
               },
             ),
-             ListTile(
-              title: Text('Redação'),
+            ListTile(
+              title: const Text('Redação'),
               onTap: () {
                 Navigator.pushNamed(context, '/redacao');
               },
             ),
             ListTile(
-              title: Text('Aplicativos'),
+              title: const Text('Aplicativos'),
               onTap: () {
                 Navigator.pushNamed(context, '/apps');
               },
@@ -101,51 +209,26 @@ class HomeScreen extends StatelessWidget {
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[
-          GridItem(
-            name: 'Métodos de Estudo',
-            icon: Icons.book,
-          ),
-          GridItem(
-            name: 'Cronômetro',
-            icon: Icons.timer,
-          ),
-          GridItem(
-            name: 'Aulão do ENEM',
-            icon: Icons.school,
-          ),
-          GridItem(
-            name: 'Provas ENEM',
-            icon: Icons.assignment,
-          ),
-          GridItem(
-            name: 'Questões',
-            icon: Icons.help,
-          ),
-          GridItem(
-            name: 'Cronograma de Estudos',
-            icon: Icons.event,
-          ),
-           GridItem(
-            name: 'Redação',
-            icon: Icons.reduce_capacity_outlined,
-          ),
-          GridItem(
-            name: 'Aplicativos',
-            icon: Icons.apps,
-          ),
+          GridItem(name: 'Métodos de Estudo', image: 'images/test.jpg'),
+          GridItem(name: 'Cronômetro', icon: Icons.timer),
+          GridItem(name: 'Aulão do ENEM', icon: Icons.school),
+          GridItem(name: 'Provas ENEM', icon: Icons.assignment),
+          GridItem(name: 'Questões', icon: Icons.help),
+          GridItem(name: 'Cronograma de Estudos', icon: Icons.event),
+          GridItem(name: 'Redação', icon: Icons.reduce_capacity_outlined),
+          GridItem(name: 'Aplicativos', icon: Icons.apps),
         ],
       ),
     );
   }
 }
 
-//pagina inicial
 class GridItem extends StatelessWidget {
   final String name;
-  final IconData icon;
+  final String? image;
+  final IconData? icon;
 
-  GridItem({required this.name, required this.icon});
-
+  const GridItem({required this.name, this.image, this.icon});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -167,13 +250,10 @@ class GridItem extends StatelessWidget {
             case 'Provas ENEM':
               Navigator.pushNamed(context, '/enemTests');
               break;
-            case 'Questões':
-              Navigator.pushNamed(context, '/questions');
-              break;
             case 'Cronograma de Estudos':
               Navigator.pushNamed(context, '/schedule');
               break;
-              case 'Redação':
+            case 'Redação':
               Navigator.pushNamed(context, '/redacao');
               break;
             case 'Aplicativos':
@@ -185,10 +265,10 @@ class GridItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(icon),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               name,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -200,7 +280,7 @@ class GridItem extends StatelessWidget {
 class PlaceholderPage extends StatelessWidget {
   final String title;
 
-  PlaceholderPage({required this.title});
+  const PlaceholderPage({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -215,49 +295,124 @@ class PlaceholderPage extends StatelessWidget {
   }
 }
 
-//Abas dentro do metodo de estudos
 class StudyMethodsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6, // número de abas
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Métodos de Estudo'),
+          title: const Text('Métodos de Estudo'),
         ),
         body: GridView.count(
           crossAxisCount: 2,
           children: <Widget>[
-            GridItem(
-              name: 'Técnica de Pomodoro',
-              icon: Icons.timer,
-            ),
-            GridItem(
-              name: 'Kumon',
-              icon: Icons.school,
-            ),
-            GridItem(
-              name: 'Método EPL2R',
-              icon: Icons.assignment,
-            ),
-            GridItem(
-              name: 'Questões',
-              icon: Icons.help,
-            ),
-            GridItem(
-              name: 'Mapas Mentais',
-              icon: Icons.event,
-            ),
-            GridItem(
-              name: 'Testes Práticos',
-              icon: Icons.apps,
-            ),
-            GridItem(
-              name: 'Flashcards',
-              icon: Icons.apps,
-            ),
+            GridItem(name: 'Técnica de Pomodoro', icon: Icons.timer),
+            GridItem(name: 'Kumon', icon: Icons.school),
+            GridItem(name: 'Método EPL2R', icon: Icons.assignment),
+            GridItem(name: 'Mapas Mentais', icon: Icons.event),
+            GridItem(name: 'Testes Práticos', icon: Icons.apps),
+            GridItem(name: 'Flashcards', icon: Icons.apps),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
+  void _navigateToNextPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const NextPage()),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Register Page'),
+        backgroundColor: Colors.orange,
+      ),
+      body: Center(
+        child: Container(
+          width: 250,
+          height: 350,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Nome',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Senha',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Número',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _navigateToNextPage(context);
+                },
+                child: const Text('Cadastrar'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NextPage extends StatelessWidget {
+  const NextPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Next Page'),
+        backgroundColor: Colors.purple,
+      ),
+      body: const Center(
+        child: Text('This is the next page'),
       ),
     );
   }
