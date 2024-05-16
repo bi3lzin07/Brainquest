@@ -142,7 +142,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('BrainQuest'),
       ),
-      drawer: Drawer(
+            drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -153,6 +153,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: Icon(Icons.menu_book), // Adicione o ícone aqui
               title: const Text('Métodos de Estudo'),
               onTap: () {
                 Navigator.push(
@@ -162,42 +163,49 @@ class HomePage extends StatelessWidget {
               },
             ),
             ListTile(
+              leading: Icon(Icons.timer), // Adicione o ícone aqui
               title: const Text('Cronômetro'),
               onTap: () {
                 Navigator.pushNamed(context, '/timer');
               },
             ),
             ListTile(
+              leading: Icon(Icons.school), // Adicione o ícone aqui
               title: const Text('Aulão do ENEM'),
               onTap: () {
                 Navigator.pushNamed(context, '/enemLessons');
               },
             ),
             ListTile(
+              leading: Icon(Icons.assignment), // Adicione o ícone aqui
               title: const Text('Provas ENEM'),
               onTap: () {
                 Navigator.pushNamed(context, '/enemTests');
               },
             ),
             ListTile(
+              leading: Icon(Icons.help), // Adicione o ícone aqui
               title: const Text('Questões'),
               onTap: () {
                 Navigator.pushNamed(context, '/questions');
               },
             ),
             ListTile(
+              leading: Icon(Icons.event), // Adicione o ícone aqui
               title: const Text('Cronograma de Estudos'),
               onTap: () {
                 Navigator.pushNamed(context, '/schedule');
               },
             ),
             ListTile(
+              leading: Icon(Icons.reduce_capacity_outlined), // Adicione o ícone aqui
               title: const Text('Redação'),
               onTap: () {
                 Navigator.pushNamed(context, '/redacao');
               },
             ),
             ListTile(
+              leading: Icon(Icons.apps), // Adicione o ícone aqui
               title: const Text('Aplicativos'),
               onTap: () {
                 Navigator.pushNamed(context, '/apps');
@@ -206,10 +214,11 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[
-          GridItem(name: 'Métodos de Estudo', image: 'images/test.jpg'),
+          GridItem(name: 'Métodos de Estudo'), //image: 'images/test.jpg',
           GridItem(name: 'Cronômetro', icon: Icons.timer),
           GridItem(name: 'Aulão do ENEM', icon: Icons.school),
           GridItem(name: 'Provas ENEM', icon: Icons.assignment),
@@ -417,3 +426,79 @@ class NextPage extends StatelessWidget {
     );
   }
 }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Register Page'),
+        backgroundColor: Colors.orange,
+      ),
+      body: Center(
+        child: Container(
+          width: 250,
+          height: 350,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Nome',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Senha',
+                  border: OutlineInputBorder(),
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Número',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.phone,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _navigateToNextPage(context);
+                },
+                child: const Text('Cadastrar'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  
+  class _navigateToNextPage {
+  _navigateToNextPage(BuildContext context);
+  }
+
