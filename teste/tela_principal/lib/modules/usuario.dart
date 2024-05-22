@@ -19,4 +19,6 @@ class Usuario {
       required this.tipoUsuario});
 }
 
-List<Usuario> usuarios = [];
+List<Usuario> usuarios = [
+  Usuario(nome: 'a', email: 'a', senha: 'a', matricula: 'a', serie: 'a', tipoUsuario: UsuarioType.aluno)
+];

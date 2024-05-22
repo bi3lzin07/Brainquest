@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tela_principal/screens/metodo_estudo_tela.dart';
 
 // ignore: must_be_immutable
 class GridItem extends StatelessWidget {
   final String? name;
   String? image;
   final IconData? icon;
-  double width;
-  double height;
+  String? route;
 
-  GridItem({required this.name, this.image, this.icon, this.width = 200, this.height = 200});
+  GridItem({required this.name, this.image, this.icon, this.route});
   @override
   Widget build(BuildContext context) {
     List<Widget> myWidgets = [];
@@ -22,7 +20,10 @@ class GridItem extends StatelessWidget {
     //           ),
 
     if (image != null) {
-      myWidgets.add(Image.asset(image!));
+      myWidgets.add(Image.asset(
+        image!,
+        fit: BoxFit.cover,
+      ));
     }
     if (icon != null) {
       myWidgets.add(Icon(icon));
@@ -37,38 +38,22 @@ class GridItem extends StatelessWidget {
     }
 
     return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
       child: InkWell(
         onTap: () {
-          switch (name) {
-            case 'Métodos de Estudo':
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MetodoEstudoTela()),
-              );
-              break;
-            case 'Cronômetro':
-              Navigator.pushNamed(context, '/timer');
-              break;
-            case 'Aulão do ENEM':
-              Navigator.pushNamed(context, '/enemLessons');
-              break;
-            case 'Provas ENEM':
-              Navigator.pushNamed(context, '/enemTests');
-              break;
-            case 'Cronograma de Estudos':
-              Navigator.pushNamed(context, '/schedule');
-              break;
-            case 'Redação':
-              Navigator.pushNamed(context, '/redacao');
-              break;
-            case 'Aplicativos':
-              Navigator.pushNamed(context, '/apps');
-              break;
+          if (route != null) {
+            Navigator.pushNamed(context, route!);
           }
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: myWidgets,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: myWidgets,
+          ),
         ),
       ),
     );

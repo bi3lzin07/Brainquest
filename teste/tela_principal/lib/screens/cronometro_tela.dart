@@ -1,33 +1,19 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cronômetro Pomodoro',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: CronometroTela(),
-    );
-  }
-}
+import 'package:flutter/material.dart';
 
 class CronometroTela extends StatefulWidget {
   @override
-  _CronometroTela createState() => _CronometroTela();
+  _PomodoroTimerState createState() => _PomodoroTimerState();
 }
 
-class _CronometroTela extends State<CronometroTela> {
-  Duration studyDuration =
-      Duration(minutes: 1); // Changed the initial study duration to 1 minute
-  Duration breakDuration =
-      Duration(minutes: 1); // Changed the initial break duration to 1 minute
+class _PomodoroTimerState extends State<CronometroTela> {
+  int studyMinutes = 30;
+  int breakMinutes = 15;
   Timer? _studyTimer;
   Timer? _breakTimer;
-  Duration remainingStudyTime = Duration(minutes: 1);
-  Duration remainingBreakTime = Duration(minutes: 1);
+  Duration remainingStudyTime = Duration(minutes: 30);
+  Duration remainingBreakTime = Duration(minutes: 15);
 
   void startStudyTimer() {
     _studyTimer?.cancel();
@@ -61,25 +47,18 @@ class _CronometroTela extends State<CronometroTela> {
   }
 
   void resetTimers() {
-    stopTimers();
     setState(() {
-      remainingStudyTime = studyDuration;
-      remainingBreakTime = breakDuration;
+      stopTimers();
+      remainingStudyTime = Duration(minutes: studyMinutes);
+      remainingBreakTime = Duration(minutes: breakMinutes);
     });
   }
 
-  void setStudyDuration(double value) {
-    setState(() {
-      studyDuration = Duration(minutes: value.toInt());
-      remainingStudyTime = studyDuration;
-    });
-  }
-
-  void setBreakDuration(double value) {
-    setState(() {
-      breakDuration = Duration(minutes: value.toInt());
-      remainingBreakTime = breakDuration;
-    });
+  String formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String minutes = twoDigits(duration.inMinutes.remainder(60));
+    String seconds = twoDigits(duration.inSeconds.remainder(60));
+    return '$minutes:$seconds';
   }
 
   @override
@@ -87,58 +66,109 @@ class _CronometroTela extends State<CronometroTela> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Cronômetro Pomodoro'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Tempo de Estudo',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.green[600],
+              ),
+            ),
+            Text(
+              formatDuration(remainingStudyTime),
+              style: TextStyle(
+                fontSize: 72,
+                color: Colors.yellow[700],
+              ),
+            ),
+            SizedBox(height: 40),
+            Text(
+              'Tempo de Descanso',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.yellow[600],
+              ),
+            ),
+            Text(
+              formatDuration(remainingBreakTime),
+              style: TextStyle(
+                fontSize: 72,
+                color: Colors.green[700],
+              ),
+            ),
+            SizedBox(height: 40),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
-                  child: _buildTimerCard(
-                    title: 'Estudando',
-                    duration: remainingStudyTime,
-                    durationSetter: setStudyDuration,
-                    maxDuration: 120,
-                    color: Colors.blue,
+                  child: ElevatedButton(
+                    onPressed: startStudyTimer,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red[300],
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text('Iniciar Estudo'),
                   ),
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 Expanded(
-                  child: _buildTimerCard(
-                    title: 'Descanso',
-                    duration: remainingBreakTime,
-                    durationSetter: setBreakDuration,
-                    maxDuration: 30,
-                    color: Colors.green,
+                  child: ElevatedButton(
+                    onPressed: startBreakTimer,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[300],
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text('Iniciar Descanso'),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: startStudyTimer,
-                  child: Text('Iniciar Estudo'),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: stopTimers,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey[300],
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text('Parar'),
+                  ),
                 ),
                 SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: startBreakTimer,
-                  child: Text('Iniciar Descanso'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: stopTimers,
-                  child: Text('Parar'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: resetTimers,
-                  child: Text('Resetar'),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: resetTimers,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange[300],
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      textStyle: TextStyle(fontSize: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text('Resetar'),
+                  ),
                 ),
               ],
             ),
@@ -146,75 +176,5 @@ class _CronometroTela extends State<CronometroTela> {
         ),
       ),
     );
-  }
-
-  Widget _buildTimerCard({
-    required String title,
-    required Duration duration,
-    required void Function(double) durationSetter,
-    required double maxDuration,
-    required Color color,
-  }) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.bold, color: color),
-            ),
-            SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    '${duration.inMinutes.toString().padLeft(2, '0')}',
-                    style: TextStyle(fontSize: 32, color: color),
-                  ),
-                  Text(
-                    ':',
-                    style: TextStyle(fontSize: 32, color: color),
-                  ),
-                  Text(
-                    '${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
-                    style: TextStyle(fontSize: 32, color: color),
-                  ),
-                ],
-              ),
-            ),
-            Slider(
-              value: duration.inMinutes.toDouble(),
-              min: 1,
-              max:
-                  maxDuration, // Changed the max value to be greater than the min value
-              divisions: maxDuration.toInt() - 1,
-              onChanged: durationSetter,
-              activeColor: color,
-              label: duration.inMinutes.toString(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _studyTimer?.cancel();
-    _breakTimer?.cancel();
-    super.dispose();
   }
 }

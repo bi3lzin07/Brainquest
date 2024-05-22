@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tela_principal/main.dart';
 import 'package:tela_principal/modules/usuario.dart';
 import 'package:tela_principal/widgets/myDialog.dart';
 

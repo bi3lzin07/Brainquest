@@ -31,18 +31,20 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_signin_button: ^2.0.0
-
-
-
+  flutter_gemini: ^2.0.3
+  image_picker: ^1.1.1
+  dash_chat_2: ^0.0.20
+  cupertino_icons: ^1.0.6
+  http: ^1.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  google_fonts: ^6.2.1  # Dependência atualizada
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
