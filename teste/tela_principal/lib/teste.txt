@@ -1,0 +1,96 @@
+[
+    Candidates(
+        content: Content(
+            parts: [
+                Parts(
+                    text: 
+                        Competência 1: 200
+                        Competência 2: 
+                )
+            ], 
+            role: model
+        ),
+        finishReason: STOP,
+        index: 0,
+        safetyRatings: [
+            SafetyRatings(
+                category:HARM_CATEGORY_SEXUALLY_EXPLICIT,
+                probability: NEGLIGIBLE
+            ),
+            SafetyRatings(
+                category: HARM_CATEGORY_HATE_SPEECH,
+                probability: NEGLIGIBLE
+            ), 
+            SafetyRatings(
+                category: HARM_CATEGORY_HARASSMENT,
+                probability: NEGLIGIBLE
+            ),
+            SafetyRatings(
+                category: HARM_CATEGORY_DANGEROUS_CONTENT,
+                probability: NEGLIGIBLE
+            )
+        ]
+    ),
+    Candidates(
+        content: Content(
+            parts: [
+                Parts(
+                    text: 200
+                    Competência 3: 200
+                    Competência 4: 200
+                    Competência 5: 20
+                )
+            ], 
+            role: model
+        ), 
+        finishReason: STOP, 
+        index: 0, 
+        safetyRatings: [
+            SafetyRatings(
+                category: HARM_CATEGORY_SEXUALLY_EXPLICIT, 
+                probability: NEGLIGIBLE
+            ), 
+            SafetyRatings(
+                category: HARM_CATEGORY_HATE_SPEECH,
+                probability: NEGLIGIBLE
+            ), SafetyRatings(
+                category: HARM_CATEGORY_HARASSMENT, 
+                probability: NEGLIGIBLE
+            ),
+            SafetyRatings(
+                category: HARM_CATEGORY_DANGEROUS_CONTENT,
+                probability: NEGLIGIBLE
+            )
+        ]
+    ), 
+    Candidates(
+        content: Content(
+            parts: [
+                Parts(
+                    text: 0 Resultado Total: 1000
+                )
+            ], 
+            role: model
+        ), 
+        finishReason: STOP, 
+        index: 0, 
+        safetyRatings: [
+            SafetyRatings(
+                category: HARM_CATEGORY_SEXUALLY_EXPLICIT, 
+                probability: NEGLIGIBLE
+            ), 
+            SafetyRatings(
+                category: HARM_CATEGORY_HATE_SPEECH, 
+                probability: NEGLIGIBLE
+            ), 
+            SafetyRatings(
+                category: HARM_CATEGORY_HARASSMENT, 
+                probability: NEGLIGIBLE
+            ),
+            SafetyRatings(
+                category: HARM_CATEGORY_DANGEROUS_CONTENT, 
+                probability: NEGLIGIBLE
+            )
+        ]
+    )
+]

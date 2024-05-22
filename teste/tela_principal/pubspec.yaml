@@ -31,11 +31,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_signin_button: ^2.0.0
+  cupertino_icons: ^1.0.6
+  http: ^1.2.1
   flutter_gemini: ^2.0.3
   image_picker: ^1.1.1
   dash_chat_2: ^0.0.20
-  cupertino_icons: ^1.0.6
-  http: ^1.2.1
+  url_launcher: ^6.0.6 # Adicione esta linha
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -61,6 +63,9 @@ flutter:
   
   assets:
   - images/test.jpg
+  - images/fotos_questoes/matematica.png
+  #- images/biologia.png
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

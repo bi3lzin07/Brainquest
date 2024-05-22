@@ -3,6 +3,8 @@ import 'package:tela_principal/screens/cronometro_tela.dart';
 import 'package:tela_principal/screens/login.dart';
 import 'package:tela_principal/screens/metodo_estudo_tela.dart';
 import 'package:tela_principal/screens/pagina_construcao.dart';
+import 'package:tela_principal/screens/questoes_tela.dart';
+import 'package:tela_principal/screens/redacao_tela.dart';
 import 'widgets/grid_item.dart';
 
 void main() {
@@ -27,9 +29,9 @@ class MyApp extends StatelessWidget {
         '/cronometro': (context) => CronometroTela(),
         '/aulasenem': (context) => PlaceholderPage(title: 'Aulas Enem'),
         '/provasenem' : (context) => PlaceholderPage(title: 'Provas Enem'),
-        '/questoes': (context) => const PlaceholderPage(title: 'Questões'),
+        '/questoes': (context) => QuestoesTela(),
         '/cronograma': (context) => const PlaceholderPage(title: 'Cronograma de Estudos'),
-        '/redacao': (context) => const PlaceholderPage(title: 'Redação'),
+        '/redacao': (context) => RedacaoTela (),
         '/apps': (context) => const PlaceholderPage(title: 'Aplicativos'),
       },
     );
